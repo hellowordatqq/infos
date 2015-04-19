@@ -1,0 +1,32 @@
+.blog-detail:after {
+	clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.blog-detail {
+	margin: 25px auto;
+    text-align: center;
+    width: 1200px;
+}
+
+.blog-breadcrumb{
+	width: 1000px;
+	height: 45px;
+	line-height: 45px;
+	border-bottom: 1px solid #CFD4D8 !important;
+}
+
+.breadcrumb > li + li:before {
+ 	content: ">";
+}
+
+.blog-breadcrumb .breadcrumb{
+	padding: 0;
+	margin: 0;
+	background-color: #fff;
+	text-align: left;
+}
+

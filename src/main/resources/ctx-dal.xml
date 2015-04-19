@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+     >
+	<context:annotation-config />
+	
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc-mysql.properties</value>
+				<value>classpath:sysconf.properties</value>
+			</list>
+		</property>
+		<property name="placeholderPrefix">
+			<value>#[</value>
+		</property>
+		<property name="placeholderSuffix">
+			<value>]</value>
+		</property>
+	</bean>
+	
+	<tx:annotation-driven/>
+
+	<!--==============================--> 
+	<!--           DB 6868            -->
+	<!--==============================-->
+	
+	<bean id="categoryDAO" class="com.github.colingan.infos.dal.category.impl.CategoryDAOImpl">
+		<property name="template" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="memberDAO" class="com.github.colingan.infos.dal.members.impl.MemberDAOImpl">
+		<property name="template" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="linkDAO" class="com.github.colingan.infos.dal.link.impl.LinkDAOImpl">
+		<property name="template" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="sliderDAO" class="com.github.colingan.infos.dal.slider.impl.SliderDAOImpl">
+		<property name="template" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="blogDAO" class="com.github.colingan.infos.dal.blogs.impl.BlogDAOImpl">
+		<property name="template" ref="jdbcTemplate" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="db6868_write" />
+	</bean>
+	
+	<!-- 6868 txManager -->
+	<bean id="txManager6868"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="db6868_write"></property>
+	</bean>
+
+	<!-- 6868 Write -->
+	<!-- 
+	<bean id="db6868_write" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>#[jdbc.driverClassName]</value>
+		</property>
+		<property name="url">
+			<value>#[db6868_write.url]</value>
+		</property>
+		<property name="username">
+			<value>#[db6868_write.username]</value>
+		</property>
+		<property name="password">
+			<value>#[db6868_write.password]</value>
+		</property>
+	</bean>
+	-->
+	<bean id="db6868_write" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>#[jdbc.driverClassName]</value>
+		</property>
+		<property name="url">
+			<value>#[db6868_write.url]</value>
+		</property>
+		<property name="username">
+			<value>#[db6868_write.username]</value>
+		</property>
+		<property name="password">
+			<value>#[db6868_write.password]</value>
+		</property>
+	</bean>
+</beans>

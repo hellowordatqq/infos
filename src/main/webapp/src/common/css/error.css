@@ -1,0 +1,22 @@
+body {
+	background-color: #f5f5f5;
+}
+.error-notice {
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 20px;
+	padding-top: 90px;
+	padding-bottom: 100px;
+	background-color: #fff;
+	text-align: left;
+}
+.error-notice p {
+	margin-left: 380px;
+	line-height: 200%;
+	margin-top: 28px;
+	color: #7D7D7D;
+	font-size: 14px;
+}
+.error-notice img {
+	margin-left: 380px;
+}

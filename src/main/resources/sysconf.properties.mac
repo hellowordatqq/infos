@@ -1,0 +1,8 @@
+logout.url=http://localhost:8080/logout
+latest.count=5
+news.delay=1
+
+# dir config for mac
+content.file.dest=/Volumes/FUN/java/infodatas
+slider.image.dir=/Volumes/FUN/java/infodatas/sliders
+blog.dir=/Volumes/FUN/java/infodatas/blogs

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+	<!-- 只维护那些M和N都不为1的表 -->
+	
+	<!-- 5858
+		FC_Word
+		=============================帽子库（不拆库也不拆表）======================
+		wordlist	帽子库	数据不拆分，数据全集同步到4个分库上再同步到下游从库
+		busiwords	帽子库	数据不拆分，数据全集同步到4个分库上再同步到下游从库
+		manchecklist	帽子库	数据不拆分，数据全集同步到4个分库上再同步到下游从库
+		authmap	帽子库	数据不拆分，数据全集同步到4个分库上再同步到下游从库
+		pathmap	帽子库	数据不拆分，数据全集同步到4个分库上再同步到下游从库
+		==========================================================================
+		
+		procedurelog	58分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		dcache	58分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		planbid	58分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		plancache	58分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		plandesc	58分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		plansave	58分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		wordinfo0-7	58分库	每个分库8张表，userid%4散列到库，(userid%32)/4散列到表
+		wordext0-7	58分库	每个分库8张表，userid%4散列到库，(userid%32)/4散列到表
+		ideainfo0-7	58分库	每个分库8张表，userid%4散列到库，(userid%32)/4散列到表
+		ideaext0-7	58分库	新增userid字段，每个分库8张表，按userid%4散列到库，按(userid%32)/4散列到表
+		unitinfo0-63	58分库	每个分库8张表，userid%4散列到库，(userid%32)/4散列到表
+		unitext0-63	58分库	每个分库8张表，userid%4散列到库，(userid%32)/4散列到表
+		planinfo	58分库	每个分库一张表，按userid模4散列到库
+		planext	58分库	新增userid字段，每个分库一张表，按userid模4散列到库
+		
+		coreject	58分库	每个分库一张表，按userid模4散列到库
+		cproinfo	58分库	每个分库一张表，按userid模4散列到库
+		userpref	58分库	每个分库一张表，按userid模4散列到库
+		wbudget	58分库	每个分库一张表，按userid模4散列到库
+		wbudgetsetuser	58分库	每个分库一张表，按userid模4散列到库
+		wipblack	58分库	每个分库一张表，按userid模4散列到库
+		wregion	58分库	每个分库一张表，按userid模4散列到库
+		plancyc	58分库	新增userid字段，每个分库一张表，按userid模4散列到库
+		wbudgetsetplan	58分库	新增userid字段，每个分库一张表，按userid模4散列到库
+		wnegative	58分库	新增userid字段，每个分库一张表，按userid模4散列到库
+		ppmark	58分库	新增userid字段，每个分库一张表，按userid模4散列到库
+		planpref	58分库	新增userid字段，每个分库一张表，按userid模4散列到库
+		krwordrecycle 58份库 每个分库8张表，userid%4散列到库，(userid%32)/4散列到表
+	 -->
+	 <dbCollection>
+		<db id="000"/>
+		<db id="001"/>
+		<db id="010"/>
+		<db id="011"/>
+		<db id="100"/>
+		<db id="101"/>
+		<db id="110"/>
+		<db id="111"/>
+	</dbCollection>
+	 
+	<schemaRule name="FC_Word" num="8">
+		<tableRule name="procedurelog" num="1"/>
+		<tableRule name="dcache" num="1"/>
+		<tableRule name="planbid" num="1"/>
+		<tableRule name="plancache" num="1"/>
+		<tableRule name="plandesc" num="1"/>
+		<tableRule name="plansave" num="1"/>
+		
+		<tableRule name="wordinfo" num="8"/>
+		<tableRule name="wordext" num="8"/>
+		<tableRule name="shadow_wordinfo" num="8"/>
+		<tableRule name="shadow_wordext" num="8"/>
+		<tableRule name="ideainfo" num="8"/>
+		<tableRule name="ideaext" num="8"/>
+		<tableRule name="shadow_ideainfo" num="8"/>
+		<tableRule name="shadow_ideaext" num="8"/>
+		<tableRule name="unitinfo" num="8"/>
+		<tableRule name="unitext" num="8"/>
+		<tableRule name="planinfo" num="1"/>
+		<tableRule name="planext" num="1"/>
+		
+		<tableRule name="coreject" num="1"/>
+		<tableRule name="shadow_coreject" num="1"/>
+		<tableRule name="cproinfo" num="1"/>
+		<tableRule name="userpref" num="1"/>
+		<tableRule name="wbudget" num="1"/>
+		<tableRule name="wbudgetsetuser" num="1"/>
+		<tableRule name="wipblack" num="1"/>
+		<tableRule name="wregion" num="1"/>
+		<tableRule name="queryregioninfo" num="1"/>
+		<tableRule name="plancyc" num="1"/>
+		<tableRule name="wbudgetsetplan" num="1"/>
+		<tableRule name="wnegative" num="1"/>
+		<tableRule name="ppmark" num="1"/>
+		<tableRule name="planpref" num="1"/>
+		<tableRule name="krwordrecycle" num="8"/>
+		<tableRule name="mtlcustomcols" num="1"/>
+		<tableRule name="weekbudget" num="1"/>
+        <tableRule name="weekbgttask" num="1"/>
+        <tableRule name="showratioinfo" num="8"/>
+        <tableRule name="showratiopref" num="1"/>
+        <tableRule name="anatarget" num="8"/>
+	</schemaRule>
+	
+	<schemaRule name="FC_Avatar" num="8">
+		<tableRule name="folderinfo" num="8"/>
+		<tableRule name="folderext" num="8"/>
+		<tableRule name="monimapinfo" num="64"/>
+	</schemaRule>
+	<schemaRule name="FC_Pandora" num="1">
+		<tableRule name="wordthreshold" num="1"/>
+		<tableRule name="wordpprate" num="1"/>
+	</schemaRule>
+	
+	<schemaRule name="FC_Monifolder" num="1">
+		<tableRule name="wfcondition" num="1"/>
+	</schemaRule>
+
+	<schemaRule name="FC_KR" num="1">
+		<tableRule name="showstate" num="1"/>
+	</schemaRule>
+	
+	
+	<!-- 5757
+		remark	57分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		opevent	57分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		opassign	57分库	历史数据保留，每个分库一张表，新数据按userid模4散列
+		tablemod	57分库	数据保留，每个分库一张表，人工更新
+		opauditperiod	57分库	每个分库一张表，按userid模4散列到库
+		opdone	57分库	每个分库64张表,userid%4散列到库,(userid%256)/4散列到表
+		optask	57分库	每个分库512张表,userid%4散列到库,(userid%2048)/4散列到表
+		ppmarktask	57分库	每个分库一张表，按userid模4散列到库
+		recheckwtask	57分库	每个分库一张表，按userid模4散列到库
+		senspair	57分库	每个分库一张表，按userid模4散列到库
+		woptask	57分库	每个分库16张表,userid%4散列到库,(userid%64)/4散列到表
+	 -->
+<!--	<schemaRule name="FC_Admin" num="4">
+		<tableRule name="remark" num="1"/>
+		<tableRule name="opevent" num="1"/>
+		<tableRule name="opassign" num="1"/>
+		<tableRule name="opauditperiod" num="1"/>
+		<tableRule name="pushedpair" num="1"/>
+		
+		<tableRule name="opdone" num="64"/>
+		<tableRule name="optask" num="512"/>
+		<tableRule name="woptask" num="16"/>
+		<tableRule name="recheckwtask" num="16"/>
+	</schemaRule> -->
+	
+	<!-- 5757 x -->
+	<schemaRule name="FC_Admin" num="1">
+		<tableRule name="branddeny" num="16"/>
+		<tableRule name="senspair" num="1"/>
+	</schemaRule>
+	
+	<!-- 5757 y -->
+	<schemaRule name="FC_Admin" num="1">
+		<tableRule name="ppmarktask" num="1"/>
+	</schemaRule>
+
+	<!-- 
+	    5353 账户优化库 
+	-->
+	<schemaRule name="FC_AO" num="1">
+		<tableRule name="aocustom" num="1"/>
+		<tableRule name="unselectfolder" num="1"/>
+		<tableRule name="aodecruser" num="1"/>
+		<tableRule name="aodecrplan" num="1"/>
+		<tableRule name="aodecrunit" num="1"/>
+		<tableRule name="aodecrword" num="8"/>
+		<tableRule name="deltopword" num="8"/>
+		<tableRule name="spdaytype" num="1"/>
+	</schemaRule>
+	
+	<!-- 
+		6868
+		reporttemplate 模板表，不拆库，分8张表
+		material 物料表，不拆库，分8张表
+	 -->
+	<schemaRule name="report_db" num="1">
+		<tableRule name="reporttemplate" num="8"/>
+		<tableRule name="material" num="8"/>
+	</schemaRule>
+	
+	<!-- 
+		apiv1
+		reporttemplate 模板表，不拆库，分8张表
+		material 物料表，不拆库，分8张表
+	 -->
+	<schemaRule name="api_db" num="1">
+		<tableRule name="reporttemplate" num="8"/>
+		<tableRule name="material" num="8"/>
+	</schemaRule>
+	
+	<!-- 
+		6601 不拆库,不拆表
+	 -->
+	 
+	
+	<!-- 
+		6600 不拆库,不拆表
+	 -->
+	 
+	<!-- 
+		5656 不拆库,512张，query
+	-->
+	<!--  <schemaRule name="queryrpt_db" num="1">
+		<tableRule name="queryinfo" num="512"/>
+	</schemaRule> -->
+	 
+	<!-- 
+		5959 不拆库
+	-->
+	
+	<tableNumRule name="table_num_el" value="#userid%(#tnum*#dnum)/#dnum" />
+	<databaseNumRule name="database_num_el" value="#userid%#dnum" />
+	
+	<!-- 
+		5151 不拆库,拆表
+	-->
+	<schemaRule name="FC_Survey" num="1">
+		<tableRule name="answer" num="32"/>
+	</schemaRule>
+</rules>

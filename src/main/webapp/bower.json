@@ -1,0 +1,18 @@
+{
+  "name": "estart-bower",
+  "version": "0.0.1",
+  "description": "estart project denpendencies",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "requirejs": "~2.1.15",
+    "avalon": "~1.3.6"
+  }
+}

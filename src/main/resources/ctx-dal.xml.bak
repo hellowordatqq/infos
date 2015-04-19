@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+     >
+	<context:annotation-config />
+	
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc-mysql.properties</value>
+			</list>
+		</property>
+		<property name="placeholderPrefix">
+			<value>#[</value>
+		</property>
+		<property name="placeholderSuffix">
+			<value>]</value>
+		</property>
+	</bean>
+	
+	<tx:annotation-driven/>
+
+	<!--==============================--> 
+	<!--           DB 6868            -->
+	<!--==============================-->
+	
+	<bean id="categoryDAO" class="com.github.colingan.infos.dal.category.impl.CategoryDAOImpl">
+		<property name="router" ref="router6868" />
+	</bean>
+	
+	<bean id="memberDAO" class="com.github.colingan.infos.dal.members.impl.MemberDAOImpl">
+		<property name="router" ref="router6868" />
+	</bean>
+	
+	<bean id="linkDAO" class="com.github.colingan.infos.dal.link.impl.LinkDAOImpl">
+		<property name="router" ref="router6868" />
+	</bean>
+	
+	<bean id="sliderDAO" class="com.github.colingan.infos.dal.slider.impl.SliderDAOImpl">
+		<property name="router" ref="router6868" />
+	</bean>
+	
+	<bean id="blogDAO" class="com.github.colingan.infos.dal.blogs.impl.BlogDAOImpl">
+		<property name="router" ref="router6868" />
+	</bean>
+	
+	<!-- 6868 Router -->
+	<bean id="router6868" class="com.baidu.darwin.earth.mermaid.router.UseridRouter">
+		<property name="prefix" value="vdb6868" />
+	</bean>
+	<!-- Table Rule -->
+	<bean id="tableRule" class="com.baidu.darwin.earth.mermaid.rule.SimpleTableRule" init-method="init" />
+	
+
+
+	<!-- 6868 Virtual Data Source -->
+	<bean id="vdb6868" class="com.baidu.darwin.earth.mermaid.config.VirtualDataSource">
+		<property name="writePool" ref="db6868_write" />
+		<property name="readPools">
+			<list>
+				<ref bean="db6868_read_1" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 6868 txManager -->
+	<bean id="txManager6868"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="db6868_write"></property>
+	</bean>
+
+	<!-- 6868 Write -->
+	<bean id="db6868_write" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>#[jdbc.driverClassName]</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>#[db6868_write.url]</value>
+		</property>
+		<property name="user">
+			<value>#[db6868_write.username]</value>
+		</property>
+		<property name="password">
+			<value>#[db6868_write.password]</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>#[db6868_write.maxPoolSize]</value>
+		</property>
+		<property name="minPoolSize">
+			<value>#[db6868_write.minPoolSize]</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>#[db6868_write.initialPoolSize]</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>#[db6868_write.idleConnectionTestPeriod]</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>#[db6868_write.maxIdleTime]</value>
+		</property>
+	</bean>
+	<!-- 6868 Read1 -->
+	<bean id="db6868_read_1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>#[jdbc.driverClassName]</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>#[db6868_read_1.url]</value>
+		</property>
+		<property name="user">
+			<value>#[db6868_read_1.username]</value>
+		</property>
+		<property name="password">
+			<value>#[db6868_read_1.password]</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>#[db6868_read_1.maxPoolSize]</value>
+		</property>
+		<property name="minPoolSize">
+			<value>#[db6868_read_1.minPoolSize]</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>#[db6868_read_1.initialPoolSize]</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>#[db6868_read_1.idleConnectionTestPeriod]</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>#[db6868_read_1.maxIdleTime]</value>
+		</property>
+	</bean>
+	
+	<bean id="detector" class="com.baidu.darwin.earth.mermaid.task.DataSourceDetector">
+		<property name="detectInterval" value="10000" />
+		<property name="recoverInterval" value="60000" />
+		<property name="offset" value="10000"/>
+	</bean>
+</beans>
