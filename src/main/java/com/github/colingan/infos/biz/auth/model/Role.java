@@ -5,7 +5,7 @@ package com.github.colingan.infos.biz.auth.model;
 
 /**
  * 角色枚举类，一期就两类角色：普通用户，管理员
- * 
+ * （角色类--哈哈哈哈）
  * @title Role
  * @author Gan Jia (ganjia@baidu.com)
  * @date 2014年11月10日
