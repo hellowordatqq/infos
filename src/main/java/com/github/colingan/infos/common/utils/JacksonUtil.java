@@ -33,6 +33,7 @@ public abstract class JacksonUtil {
 
   /**
    * json转成对象obj
+ * @param <T>
    * 
    * @param s json串
    * @param valueType 对象类型
@@ -43,7 +44,7 @@ public abstract class JacksonUtil {
    */
   public static final <T> T str2Obj(String s, Class<T> valueType) throws JsonParseException,
       JsonMappingException, IOException {
-    return mapper.readValue(s, valueType);
+    return (T)mapper.readValue(s, valueType);
   }
 
   /**
@@ -58,7 +59,7 @@ public abstract class JacksonUtil {
    */
   public static final <T> T str2Obj(String s, TypeReference<T> typeReference)
       throws JsonParseException, JsonMappingException, IOException {
-    return mapper.readValue(s, typeReference);
+    return (T)mapper.readValue(s, typeReference);
   }
 
   public static final String obj2Str(Object obj) throws JsonGenerationException,
